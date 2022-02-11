@@ -15,6 +15,25 @@ let DashboardPage = () => {
     name: 'transactions',
   });
 
+  let captureImageOfCanvas = (id, fileName) => {
+    var canvasElement = document.getElementById(id);
+
+    var MIME_TYPE = 'image/png';
+
+    var imgURL = canvasElement.toDataURL(MIME_TYPE);
+
+    var dlLink = document.createElement('a');
+    dlLink.download = fileName;
+    dlLink.href = imgURL;
+    dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(
+      ':'
+    );
+
+    document.body.appendChild(dlLink);
+    dlLink.click();
+    document.body.removeChild(dlLink);
+  };
+
   onMount(() => {
     setTimeout(() => {
       axios
@@ -180,6 +199,33 @@ let DashboardPage = () => {
         </div>
 
         <div class="flex flex-col w-full h-full pb-10 overflow-y-auto">
+          <div
+            class="flex flex-col justify-center items-center p-5 self-end cursor-pointer"
+            onClick={() =>
+              captureImageOfCanvas('transactions', 'Transactions Statistics')
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
           <canvas id="transactions" class="max-h-96"></canvas>
         </div>
       </div>

@@ -67,8 +67,30 @@ let TransactionsPage = () => {
     }, 300);
   };
 
+  let exportTransactions = () => {
+    setTimeout(() => {
+      axios
+        .get('http://192.168.101.120:3000/api/exports/transactions', {
+          headers: {
+            authorization: 'Bearer ' + authState.authenticationToken,
+          },
+          responseType: 'blob',
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            saveAs(
+              response.data,
+              'Transactions-' +
+                moment(Date.now()).format('DD/MM/YYYY-HH:mm') +
+                '.xlsx'
+            );
+          }
+        });
+    }, 300);
+  };
+
   return (
-    <div class="flex flex-col space-y-5 w-full h-full p-2 rounded-t shadow bg-white dark:bg-gray-900">
+    <div class="flex flex-col space-y-5 w-full h-full p-5 rounded-t shadow bg-white dark:bg-gray-900">
       <div class="flex justify-between items-center">
         <div class="text-lg">Transactions</div>
         <div class="flex space-x-5">
@@ -107,6 +129,25 @@ let TransactionsPage = () => {
                 stroke-linejoin="round"
                 stroke-width="2"
                 d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
+              />
+            </svg>
+          </div>
+          <div
+            class="text-lg cursor-pointer"
+            onClick={() => exportTransactions()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
           </div>

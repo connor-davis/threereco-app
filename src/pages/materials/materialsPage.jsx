@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { saveAs } from 'file-saver';
+import moment from 'moment';
 import { useNavigate } from 'solid-app-router';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
@@ -56,28 +58,68 @@ let MaterialsPage = () => {
     }, 300);
   };
 
+  let exportMaterials = () => {
+    setTimeout(() => {
+      axios
+        .get('http://192.168.101.120:3000/api/exports/materials', {
+          headers: {
+            authorization: 'Bearer ' + authState.authenticationToken,
+          },
+          responseType: 'blob',
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            saveAs(
+              response.data,
+              'Materials-' +
+                moment(Date.now()).format('DD/MM/YYYY-HH:mm') +
+                '.xlsx'
+            );
+          }
+        });
+    }, 300);
+  };
+
   return (
-    <div class="flex flex-col space-y-5 w-full h-full p-2 rounded-t shadow bg-white dark:bg-gray-900">
+    <div class="flex flex-col space-y-5 w-full h-full p-5 rounded-t shadow bg-white dark:bg-gray-900">
       <div class="flex justify-between items-center">
         <div class="text-lg">Materials</div>
-        <div
-          class="text-lg cursor-pointer"
-          onClick={() => navigate('/materials/add')}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div class="flex space-x-5">
+          <div
+            class="text-lg cursor-pointer"
+            onClick={() => navigate('/materials/add')}
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </div>
+          <div class="text-lg cursor-pointer" onClick={() => exportMaterials()}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
         </div>
       </div>
 
