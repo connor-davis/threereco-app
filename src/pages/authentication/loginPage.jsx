@@ -45,7 +45,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
 
   return (
     <div class="flex flex-col w-full h-full justify-center items-center bg-gray-200 dark:bg-gray-800">
-      <div class="flex flex-col space-y-10 bg-white dark:bg-gray-900 rounded-md shadow p-5">
+      <div class="flex flex-col space-y-10 w-72 bg-white dark:bg-gray-900 rounded-md shadow p-5">
         <div class="flex justify-center items-center w-full h-full text-3xl text-emeral-800 dark:text-white">
           <EcoLogo />
         </div>

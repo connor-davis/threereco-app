@@ -3,6 +3,7 @@ import { useNavigate } from 'solid-app-router';
 import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import EcoLogo from '../../components/3rEcoLogo';
+import TermsAndConditionsModal from '../../components/modals/tsandcsModal';
 import useState from '../../hooks/state';
 
 let RegisterPage = ({ toggleLogin = () => {} }) => {
@@ -19,7 +20,22 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
   let [password, setPassword] = createSignal('');
   let [confirmPassword, setConfirmPassword] = createSignal('');
 
+  let [agreedToTermsAndConditions, setAgreedToTermsAndConditions] =
+    createSignal(false);
+  let [showTermsAndConditionsModal, setShowTermsAndConditionsModal] =
+    createSignal(false);
+
   let authenticate = () => {
+    if (idNumber() === '' || password() === '' || confirmPassword() === '')
+      return setMessage({
+        type: 'error',
+        value: 'Please fill out all fields.',
+      });
+    if (!agreedToTermsAndConditions())
+      return setMessage({
+        type: 'error',
+        value: 'You need to agree to the terms and conditions to register.',
+      });
     if (password() !== confirmPassword())
       return setMessage({ type: 'error', value: 'Passwords do not match.' });
     else
@@ -55,7 +71,23 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
 
   return (
     <div class="flex flex-col w-full h-full justify-center items-center bg-gray-200 dark:bg-gray-800">
-      <div class="flex flex-col space-y-10 bg-white dark:bg-gray-900 rounded-md shadow p-5">
+      {showTermsAndConditionsModal() && (
+        <TermsAndConditionsModal
+          onAgree={() => {
+            setShowTermsAndConditionsModal(false);
+            setAgreedToTermsAndConditions(true);
+            console.log('User agreed');
+          }}
+          onDisagree={() => {
+            setShowTermsAndConditionsModal(false);
+            setAgreedToTermsAndConditions(false);
+            console.log('User disagreed');
+          }}
+          onClose={() => setShowTermsAndConditionsModal(false)}
+        />
+      )}
+
+      <div class="flex flex-col space-y-10 w-72 bg-white dark:bg-gray-900 rounded-md shadow p-5">
         <div class="flex justify-center items-center w-full h-full text-3xl text-emeral-800 dark:text-white">
           <EcoLogo />
         </div>
@@ -64,8 +96,10 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
           <div
             class={`${message.type === 'error' && 'text-red-500'} ${
               message.type === 'success' && 'text-emeral-800'
-            }`}
-          ></div>
+            } w-full text-center`}
+          >
+            {message.value}
+          </div>
         )}
 
         <div class="flex flex-col space-y-3">
@@ -76,6 +110,7 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
             onChange={(event) => {
               setIdNumber(event.target.value);
             }}
+            required
           />
           <input
             type="password"
@@ -84,6 +119,7 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
             onChange={(event) => {
               setPassword(event.target.value);
             }}
+            required
           />
           <input
             type="password"
@@ -92,10 +128,27 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
             onChange={(event) => {
               setConfirmPassword(event.target.value);
             }}
+            required
           />
         </div>
 
         <div class="flex flex-col items-center space-y-3">
+          <div class="flex justify-center items-center w-full space-x-2">
+            <div
+              class={`flex flex-col justify-center items-center w-5 h-5 rounded-full cursor-pointer ${
+                agreedToTermsAndConditions() ? 'bg-green-500' : 'bg-gray-200'
+              }`}
+              onClick={() =>
+                setAgreedToTermsAndConditions(!agreedToTermsAndConditions())
+              }
+            ></div>
+            <div
+              class="text-sm cursor-pointer hover:text-green-500"
+              onClick={() => setShowTermsAndConditionsModal(true)}
+            >
+              Terms and Conditions
+            </div>
+          </div>
           <button
             class="px-3 py-2 bg-emerald-800 text-white rounded shadow select-none"
             onClick={() => authenticate()}
