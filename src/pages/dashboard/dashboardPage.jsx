@@ -200,7 +200,7 @@ let DashboardPage = () => {
 
         <div class="flex flex-col w-full h-full pb-10 overflow-y-auto">
           <div
-            class="flex flex-col justify-center items-center p-5 self-end cursor-pointer"
+            class="flex flex-col justify-center items-center self-end cursor-pointer"
             onClick={() =>
               captureImageOfCanvas('transactions', 'Transactions Statistics')
             }
