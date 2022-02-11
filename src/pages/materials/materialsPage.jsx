@@ -53,7 +53,16 @@ let MaterialsPage = () => {
           }
         )
         .then((response) => {
-          if (response.status === 200) console.log(response.data.message);
+          if (response.status === 200) {
+            setMaterials(
+              materials.map((material) => {
+                if (material.id === id) return;
+                else return material;
+              })
+            );
+
+            return console.log(response.data.message);
+          }
         });
     }, 300);
   };
