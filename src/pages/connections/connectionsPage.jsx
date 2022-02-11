@@ -46,7 +46,16 @@ let ConnectionsPage = () => {
           }
         )
         .then((response) => {
-          if (response.status === 200) return;
+          if (response.status === 200) {
+            setConnections(
+              connections.map((connection) => {
+                if (connection.id === id) return;
+                else return connection;
+              })
+            );
+
+            return console.log(response.data.message);
+          }
         });
     }, 300);
   };
