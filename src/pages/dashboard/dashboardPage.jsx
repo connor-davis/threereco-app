@@ -73,23 +73,35 @@ let DashboardPage = () => {
   });
 
   let calculateMonthsPurchases = (month) => {
-    return transactions.filter(
-      (transaction) =>
-        transaction.type === 'purchase' &&
+    return transactions.filter((transaction) => {
+      let isUser =
+        transaction.purchaser.id === userState.id ||
+        transaction.purchaser.connection === userState.id;
+      let isDate =
         moment(transaction.date).format('YYYY') ===
           moment(Date.now()).format('YYYY') &&
-        moment(transaction.date).format('MMMM') === month
-    ).length;
+        moment(transaction.date).format('MMMM') === month;
+
+      let canProceed = isUser && isDate;
+
+      return canProceed;
+    }).length;
   };
 
   let calculateMonthsSales = (month) => {
-    return transactions.filter(
-      (transaction) =>
-        transaction.type === 'sale' &&
+    return transactions.filter((transaction) => {
+      let isUser =
+        transaction.seller.id === userState.id ||
+        transaction.seller.connection === userState.id;
+      let isDate =
         moment(transaction.date).format('YYYY') ===
           moment(Date.now()).format('YYYY') &&
-        moment(transaction.date).format('MMMM') === month
-    ).length;
+        moment(transaction.date).format('MMMM') === month;
+
+      let canProceed = isUser && isDate;
+
+      return canProceed;
+    }).length;
   };
 
   let initTransactionsChart = () => {
