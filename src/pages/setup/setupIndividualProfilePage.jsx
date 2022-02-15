@@ -239,7 +239,22 @@ let SetupIndividualProfilePage = () => {
                     setStage(stage() + 1);
                   }, 3000);
                 }}
-              ></button>
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -252,7 +267,22 @@ let SetupIndividualProfilePage = () => {
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
                 onClick={() => setStage(stage() - 2)}
-              ></button>
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
               <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
                 <div class="flex flex-col space-y-2">
                   <div class="text-sm text-gray-500 dark:text-gray-400">
@@ -297,7 +327,22 @@ let SetupIndividualProfilePage = () => {
                     setStage(stage() + 1);
                   }, 3000);
                 }}
-              ></button>
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -310,7 +355,22 @@ let SetupIndividualProfilePage = () => {
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
                 onClick={() => setStage(stage() - 2)}
-              ></button>
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
               <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
                 <div class="flex flex-col space-y-2">
                   <div class="text-sm text-gray-500 dark:text-gray-400">
@@ -436,7 +496,22 @@ let SetupIndividualProfilePage = () => {
                 onClick={() => {
                   completeProfile();
                 }}
-              ></button>
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
