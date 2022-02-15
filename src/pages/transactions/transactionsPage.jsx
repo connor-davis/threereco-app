@@ -19,7 +19,7 @@ let TransactionsPage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/transactions/get', {
+        .get('https://api.3reco.co.za/api/transactions/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -44,7 +44,7 @@ let TransactionsPage = () => {
     setTimeout(() => {
       axios
         .post(
-          'http://192.168.101.120:3000/api/transactions/delete',
+          'https://api.3reco.co.za/api/transactions/delete',
           { id },
           {
             headers: {
@@ -70,7 +70,7 @@ let TransactionsPage = () => {
   let exportTransactions = () => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/exports/transactions', {
+        .get('https://api.3reco.co.za/api/exports/transactions', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },

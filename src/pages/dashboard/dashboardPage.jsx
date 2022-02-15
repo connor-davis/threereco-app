@@ -37,7 +37,7 @@ let DashboardPage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/transactions/get', {
+        .get('https://api.3reco.co.za/api/transactions/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -59,7 +59,7 @@ let DashboardPage = () => {
         });
 
       axios
-        .get('http://192.168.101.120:3000/api/connections/get', {
+        .get('https://api.3reco.co.za/api/connections/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },

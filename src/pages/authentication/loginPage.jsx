@@ -18,7 +18,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
   let authenticate = () => {
     axios
       .post(
-        'http://192.168.101.120:3000/api/authentication/login',
+        'https://api.3reco.co.za/api/authentication/login',
         {
           idNumber: idNumber(),
           password: password(),

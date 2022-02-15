@@ -14,7 +14,7 @@ let AddMaterialPage = () => {
   let addMaterial = () => {
     axios
       .post(
-        'http://192.168.101.120:3000/api/materials/add',
+        'https://api.3reco.co.za/api/materials/add',
         { user: userState.id, ...details },
         {
           headers: {

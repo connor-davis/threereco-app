@@ -24,7 +24,7 @@ let AddPurchasePage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/connections/get', {
+        .get('https://api.3reco.co.za/api/connections/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -36,7 +36,7 @@ let AddPurchasePage = () => {
         });
 
       axios
-        .get('http://192.168.101.120:3000/api/materials/get', {
+        .get('https://api.3reco.co.za/api/materials/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -52,7 +52,7 @@ let AddPurchasePage = () => {
   let addPurchase = () => {
     axios
       .post(
-        'http://192.168.101.120:3000/api/transactions/add',
+        'https://api.3reco.co.za/api/transactions/add',
         purchaseDetails,
         {
           headers: {

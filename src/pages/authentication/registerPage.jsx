@@ -41,7 +41,7 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
     else
       axios
         .post(
-          'http://192.168.101.120:3000/api/authentication/register',
+          'https://api.3reco.co.za/api/authentication/register',
           {
             idNumber: idNumber(),
             password: password(),

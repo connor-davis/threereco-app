@@ -18,7 +18,7 @@ let MaterialsPage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/materials/get', {
+        .get('https://api.3reco.co.za/api/materials/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -44,7 +44,7 @@ let MaterialsPage = () => {
     setTimeout(() => {
       axios
         .post(
-          'http://192.168.101.120:3000/api/materials/delete',
+          'https://api.3reco.co.za/api/materials/delete',
           { id },
           {
             headers: {
@@ -70,7 +70,7 @@ let MaterialsPage = () => {
   let exportMaterials = () => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/exports/materials', {
+        .get('https://api.3reco.co.za/api/exports/materials', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },

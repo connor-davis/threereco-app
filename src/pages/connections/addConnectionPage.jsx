@@ -18,7 +18,7 @@ let AddConnectionPage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/users/get', {
+        .get('https://api.3reco.co.za/api/users/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -34,7 +34,7 @@ let AddConnectionPage = () => {
   let addConnection = (id) => {
     axios
       .post(
-        'http://192.168.101.120:3000/api/connections/add',
+        'https://api.3reco.co.za/api/connections/add',
         { id },
         {
           headers: {

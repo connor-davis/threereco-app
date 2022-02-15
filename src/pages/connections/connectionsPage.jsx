@@ -18,7 +18,7 @@ let ConnectionsPage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/connections/get', {
+        .get('https://api.3reco.co.za/api/connections/get', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -37,7 +37,7 @@ let ConnectionsPage = () => {
     setTimeout(() => {
       axios
         .post(
-          'http://192.168.101.120:3000/api/connections/delete',
+          'https://api.3reco.co.za/api/connections/delete',
           { id },
           {
             headers: {
@@ -63,7 +63,7 @@ let ConnectionsPage = () => {
   let exportConnections = () => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/exports/connections', {
+        .get('https://api.3reco.co.za/api/exports/connections', {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },

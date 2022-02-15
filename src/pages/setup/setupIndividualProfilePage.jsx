@@ -34,7 +34,7 @@ let SetupIndividualProfilePage = () => {
 
   let completeProfile = () => {
     axios
-      .post('http://192.168.101.120:3000/api/users/edit', details, {
+      .post('https://api.3reco.co.za/api/users/edit', details, {
         headers: {
           authorization: 'Bearer ' + authState.authenticationToken,
         },

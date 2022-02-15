@@ -16,7 +16,7 @@ let EditMaterialPage = () => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/materials/get/' + id, {
+        .get('https://api.3reco.co.za/api/materials/get/' + id, {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
           },
@@ -39,7 +39,7 @@ let EditMaterialPage = () => {
   let addMaterial = () => {
     axios
       .put(
-        'http://192.168.101.120:3000/api/materials/edit',
+        'https://api.3reco.co.za/api/materials/edit',
         { ...details, id },
         {
           headers: {

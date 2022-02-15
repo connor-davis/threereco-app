@@ -9,7 +9,7 @@ let AuthenticationGuard = ({ children }) => {
   onMount(() => {
     setTimeout(() => {
       axios
-        .get('http://192.168.101.120:3000/api/authentication/check', {
+        .get('https://api.3reco.co.za/api/authentication/check', {
           headers: {
             authorization: 'Bearer ' + state.authenticationToken,
           },
