@@ -86,7 +86,9 @@ function App() {
             </Routes>
           )}
 
-          {userState.userType === undefined && (
+          {userState.userType}
+
+          {!userState.userType && (
             <Routes>
               <Route
                 path="/"
