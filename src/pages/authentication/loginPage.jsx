@@ -20,7 +20,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
       .post(
         'https://api.3reco.co.za/api/authentication/login',
         {
-          idNumber: username(),
+          username: username(),
           password: password(),
         },
         {
