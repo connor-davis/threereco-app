@@ -16,6 +16,7 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
 
   let [message, setMessage] = createStore({}, { name: 'message' });
 
+  let [username, setUsername] = createSignal('');
   let [idNumber, setIdNumber] = createSignal('');
   let [password, setPassword] = createSignal('');
   let [confirmPassword, setConfirmPassword] = createSignal('');
@@ -43,6 +44,7 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
         .post(
           'https://api.3reco.co.za/api/authentication/register',
           {
+            username: username(),
             idNumber: idNumber(),
             password: password(),
           },
@@ -103,9 +105,18 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
         )}
 
         <div class="flex flex-col space-y-3">
+        <input
+            type="text"
+            placeholder="Your username"
+            class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
+            onChange={(event) => {
+              setUsername(event.target.value);
+            }}
+            required
+          />
           <input
             type="text"
-            placeholder="Your ID Number"
+            placeholder="Your ID/Reg Number"
             class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
             onChange={(event) => {
               setIdNumber(event.target.value);

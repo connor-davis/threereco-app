@@ -12,7 +12,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
 
   let [message, setMessage] = createStore({});
 
-  let [idNumber, setIdNumber] = createSignal('');
+  let [username, setUsername] = createSignal('');
   let [password, setPassword] = createSignal('');
 
   let authenticate = () => {
@@ -20,7 +20,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
       .post(
         'https://api.3reco.co.za/api/authentication/login',
         {
-          idNumber: idNumber(),
+          idNumber: username(),
           password: password(),
         },
         {
@@ -55,16 +55,16 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
             class={`${message.type === 'error' && 'text-red-500'} ${
               message.type === 'success' && 'text-emeral-800'
             }`}
-          ></div>
+          >{message.value}</div>
         )}
 
         <div class="flex flex-col space-y-3">
           <input
             type="text"
-            placeholder="Your ID Number"
+            placeholder="Your username"
             class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
             onChange={(event) => {
-              setIdNumber(event.target.value);
+              setUsername(event.target.value);
             }}
           />
           <input
