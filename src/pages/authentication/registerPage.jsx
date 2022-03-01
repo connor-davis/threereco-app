@@ -63,8 +63,6 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
           updateAuthenticationGuard({
             authenticationToken: response.data.data.userAuthenticationToken,
           });
-
-          navigate('/');
         })
         .catch(() => {
           setMessage({ type: 'error', value: 'Authentication error.' });
