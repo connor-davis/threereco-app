@@ -8,10 +8,13 @@ let AddConnectionPage = () => {
   let navigate = useNavigate();
 
   let [authState, setAuthState] = useState('authenticationGuard');
+  let [userState, setUserState] = useState('userState');
 
   let [users, setUsers] = createStore([], { name: 'users' });
 
+  let [searchTerm, setSearchTerm] = createSignal('');
   let [selectedUser, setSelectedUser] = createSignal('');
+  let [searchedUser, setSearchedUser] = createSignal(false);
 
   onMount(() => {
     setTimeout(() => {
@@ -59,9 +62,86 @@ let AddConnectionPage = () => {
             type="text"
             placeholder="Search by ID/Reg Number"
             class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-            value={selectedUser()}
-            onChange={(event) => setSelectedUser(event.target.value)}
+            value={searchTerm()}
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
+            }}
           />
+        </div>
+
+        <div class="flex w-full flex-col space-y-2">
+          {searchTerm() !== '' && searchedUser() && (
+            <div class="w-full h-full overflow-y-auto">
+              <table class="table-auto w-full">
+                <thead class="border-b border-gray-200 dark:border-gray-800">
+                  <tr>
+                    <th class="p-3 text-left">Full Name</th>
+                    <th class="p-3 text-left">Email</th>
+                  </tr>
+                </thead>
+                <tbody class="w-full">
+                  {users.map(
+                    (user) =>
+                      user.userIdNumber.includes(searchTerm()) && (
+                        <tr
+                          class={`border-b w-full border-gray-200 dark:border-gray-800 ${
+                            selectedUser() === user.id && 'bg-green-300'
+                          }`}
+                        >
+                          <td class="p-4">{user.userDisplayName}</td>
+                          <td class="p-4">{user.userEmail}</td>
+                          <td class="p-4 w-10">
+                            <div
+                              class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
+                              onClick={() => setSelectedUser(user.id)}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            </div>
+                          </td>
+                          <td class="p-4 w-10">
+                            <div
+                              class="px-4 py-1 text-sm text-white bg-red-500 rounded cursor-pointer"
+                              onClick={() => {
+                                setSearchedUser(false);
+                                setSearchTerm('');
+                              }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         <div class="flex space-x-3 items-center">
@@ -71,12 +151,22 @@ let AddConnectionPage = () => {
           >
             Cancel
           </button>
-          <button
-            class="px-3 py-2 bg-emerald-800 text-white rounded shadow select-none"
-            onClick={() => addConnection(selectedUser())}
-          >
-            Continue
-          </button>
+          {!searchedUser() && (
+            <button
+              class="px-3 py-2 bg-emerald-800 text-white rounded shadow select-none"
+              onClick={() => setSearchedUser(true)}
+            >
+              Search
+            </button>
+          )}
+          {searchedUser() && (
+            <button
+              class="px-3 py-2 bg-emerald-800 text-white rounded shadow select-none"
+              onClick={() => addConnection(selectedUser())}
+            >
+              Continue
+            </button>
+          )}
         </div>
       </div>
     </div>
