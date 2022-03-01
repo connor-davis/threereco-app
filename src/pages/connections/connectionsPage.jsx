@@ -10,6 +10,7 @@ let ConnectionsPage = () => {
   let navigate = useNavigate();
 
   let [authState, setAuthState] = useState('authenticationGuard');
+  let [userState, setUserState] = useState('userState');
 
   let [connections, setConnections] = createStore([], { name: 'connections' });
 
@@ -143,9 +144,24 @@ let ConnectionsPage = () => {
               <tbody class="w-full">
                 {connections.map((connection) => (
                   <tr class="border-b w-full border-gray-200 dark:border-gray-800">
-                    <td class="p-4">{connection.connection.userDisplayName}</td>
-                    <td class="p-4">{connection.connection.userEmail}</td>
-                    <td class="p-4">{connection.connection.userPhoneNumber}</td>
+                    <td class="p-4">
+                      {connection.initiator.userIdNumber ===
+                      userState.userIdNumber
+                        ? connection.connection.userDisplayName
+                        : connection.initiator.userDisplayName}
+                    </td>
+                    <td class="p-4">
+                      {connection.initiator.userIdNumber ===
+                      userState.userIdNumber
+                        ? connection.connection.userEmail
+                        : connection.initiator.userEmail}
+                    </td>
+                    <td class="p-4">
+                      {connection.initiator.userIdNumber ===
+                      userState.userIdNumber
+                        ? connection.connection.userPhoneNumber
+                        : connection.initiator.userPhoneNumber}
+                    </td>
                     <td class="p-4 w-10">
                       <div
                         class="px-4 py-1 text-sm text-white bg-red-500 rounded cursor-pointer"

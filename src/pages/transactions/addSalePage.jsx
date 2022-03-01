@@ -8,8 +8,9 @@ let AddSalePage = () => {
   let navigate = useNavigate();
 
   let [authState, setAuthState] = useState('authenticationGuard');
+  let [userState, setUserState] = useState('userState');
 
-  let [users, setUsers] = createStore([], { name: 'users' });
+  let [connections, setConnections] = createStore([], { name: 'connections' });
   let [materials, setMaterials] = createStore([], { name: 'materials' });
 
   let [searchUser, setSearchUser] = createSignal('');
@@ -29,7 +30,7 @@ let AddSalePage = () => {
         })
         .then((response) => {
           if (response.status === 200) {
-            return setUsers([...response.data.data]);
+            return setConnections([...response.data.data]);
           }
         });
 
@@ -62,9 +63,25 @@ let AddSalePage = () => {
   };
 
   return (
-    <div class="flex flex-col space-y-5 w-full h-full p-2 rounded-t shadow bg-white dark:bg-gray-900 select-none">
+    <div class="flex flex-col space-y-5 w-full h-full p-5 rounded-t shadow bg-white dark:bg-gray-900 select-none">
       <div class="flex justify-between items-center">
         <div class="text-lg">Add Sale</div>
+        <div class="text-lg cursor-pointer" onClick={() => navigate('/transactions')}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </div>
       </div>
 
       <div class="flex flex-row space-x-5">
@@ -90,43 +107,65 @@ let AddSalePage = () => {
                     </tr>
                   </thead>
                   <tbody class="relative w-full h-full overflow-y-scroll">
-                    {users.map(
-                      (user) =>
-                        user.userIdNumber.includes(searchUser()) && (
-                          <tr
-                            class={`border-b w-full border-gray-200 dark:border-gray-800 ${
-                              saleDetails.purchaser &&
-                              saleDetails.purchaser.id === user.id &&
-                              'bg-green-300'
-                            }`}
-                          >
-                            <td class="p-4">{user.userDisplayName}</td>
-                            <td class="p-4">{user.userEmail}</td>
-                            <td class="p-4 w-10">
-                              <div
-                                class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
-                                onClick={() =>
-                                  setSaleDetails('purchaser', user)
-                                }
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  class="h-4 w-4"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
+                    {connections.map((connection) =>
+                      connection.initiator.userIdNumber ===
+                      userState.userIdNumber
+                        ? connection.initiator.userIdNumber.includes(
+                            searchUser()
+                          )
+                        : connection.connection.userIdNumber.includes(
+                            searchUser()
+                          ) && (
+                            <tr
+                              class={`border-b w-full border-gray-200 dark:border-gray-800 ${
+                                saleDetails.purchaser &&
+                                saleDetails.purchaser.id === connection.id &&
+                                'bg-green-300'
+                              }`}
+                            >
+                              <td class="p-4">
+                                {connection.initiator.userIdNumber ===
+                                userState.userIdNumber
+                                  ? connection.connection.userDisplayName
+                                  : connection.initiator.userDisplayName}
+                              </td>
+                              <td class="p-4">
+                                {connection.initiator.userIdNumber ===
+                                userState.userIdNumber
+                                  ? connection.connection.userEmail
+                                  : connection.initiator.userEmail}
+                              </td>
+                              <td class="p-4 w-10">
+                                <div
+                                  class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
+                                  onClick={() =>
+                                    setSaleDetails(
+                                      'purchaser',
+                                      connection.initiator.userIdNumber ===
+                                        userState.userIdNumber
+                                        ? connection.connection
+                                        : connection.initiator
+                                    )
+                                  }
                                 >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                  />
-                                </svg>
-                              </div>
-                            </td>
-                          </tr>
-                        )
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M5 13l4 4L19 7"
+                                    />
+                                  </svg>
+                                </div>
+                              </td>
+                            </tr>
+                          )
                     )}
                   </tbody>
                 </table>
