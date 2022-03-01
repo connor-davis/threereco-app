@@ -143,13 +143,13 @@ let ConnectionsPage = () => {
               <tbody class="w-full">
                 {connections.map((connection) => (
                   <tr class="border-b w-full border-gray-200 dark:border-gray-800">
-                    <td class="p-4">{connection.userDisplayName}</td>
-                    <td class="p-4">{connection.userEmail}</td>
-                    <td class="p-4">{connection.userPhoneNumber}</td>
+                    <td class="p-4">{connection.connection.userDisplayName}</td>
+                    <td class="p-4">{connection.connection.userEmail}</td>
+                    <td class="p-4">{connection.connection.userPhoneNumber}</td>
                     <td class="p-4 w-10">
                       <div
                         class="px-4 py-1 text-sm text-white bg-red-500 rounded cursor-pointer"
-                        onClick={() => deleteConnection(connection.user)}
+                        onClick={() => deleteConnection(connection.id)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
