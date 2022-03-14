@@ -84,7 +84,7 @@ let AddSalePage = () => {
         </div>
       </div>
 
-      <div class="flex flex-row space-x-5">
+      <div class="flex flex-col md:flex-row space-y-5 md:space-x-5 overflow-y-auto">
         <div class="flex w-full flex-col space-y-2">
           <div class="flex flex-col w-full h-64 overflow-y-auto border-l border-t border-r border-b border-gray-200 dark:border-gray-800 rounded p-2">
             <div class="flex w-full flex-col space-y-2">
@@ -234,7 +234,7 @@ let AddSalePage = () => {
           >
             <div class="flex flex-col space-y-5">
               {saleDetails.purchaser && (
-                <div class="flex flex-col space-y-2">
+                <div class="flex flex-col space-y-2 overflow-x-auto">
                   <div class="text-lg font-bold">Purchaser Details</div>
                   <table class="table-auto w-full h-full overflow-hidden">
                     <thead class="border-b border-gray-200 dark:border-gray-800">
