@@ -63,8 +63,9 @@ let AddConnectionPage = () => {
             placeholder="Search by ID/Reg Number"
             class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
             value={searchTerm()}
-            onChange={(event) => {
+            onKeyUp={(event) => {
               setSearchTerm(event.target.value);
+              setSearchedUser(false);
             }}
           />
         </div>
@@ -82,7 +83,7 @@ let AddConnectionPage = () => {
                 <tbody class="w-full">
                   {users.map(
                     (user) =>
-                      user.userIdNumber.includes(searchTerm()) && (
+                      user.userIdNumber.startsWith(searchTerm()) && (
                         <tr
                           class={`border-b w-full border-gray-200 dark:border-gray-800 ${
                             selectedUser() === user.id && 'bg-green-300'

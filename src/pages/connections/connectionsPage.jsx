@@ -130,7 +130,7 @@ let ConnectionsPage = () => {
       </div>
 
       {!loading() &&
-        connections.filter((material) => material !== (null || undefined))
+        connections.filter((connection) => connection !== (null || undefined))
           .length > 0 && (
           <div class="w-full h-full overflow-y-auto overflow-x-auto">
             <table class="table-auto w-full">

@@ -35,7 +35,9 @@ let AddPurchasePage = () => {
             return setConnections([...response.data.data]);
           }
         });
+    }, 300);
 
+    setTimeout(() => {
       axios
         .get('https://api.3reco.co.za/api/materials/get', {
           headers: {
@@ -68,7 +70,10 @@ let AddPurchasePage = () => {
     <div class="flex flex-col space-y-5 w-full h-full p-5 rounded-t shadow bg-white dark:bg-gray-900 select-none">
       <div class="flex w-full justify-between items-center">
         <div class="text-lg">Add Purchase</div>
-        <div class="text-lg cursor-pointer" onClick={() => navigate('/transactions')}>
+        <div
+          class="text-lg cursor-pointer"
+          onClick={() => navigate('/transactions')}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -86,14 +91,14 @@ let AddPurchasePage = () => {
         </div>
       </div>
 
-      <div class="flex flex-col md:flex-row w-full h-full space-y-5 md:space-x-5 overflow-y-auto">
-        <div class="flex w-full flex-col space-y-2">
+      <div class="flex flex-col md:flex-row w-full h-full space-y-5 space-x-0 md:space-x-5 md:space-y-0 overflow-y-auto">
+        <div class="flex w-full flex-col space-y-5">
           <div class="flex flex-col w-full h-64 overflow-y-auto border-l border-t border-r border-b border-gray-200 dark:border-gray-800 rounded p-2">
             <div class="flex w-full flex-col space-y-2">
               <div class="flex w-full flex-col space-y-2 flex-none">
                 <input
                   type="text"
-                  placeholder="Search by User Id"
+                  placeholder="Search by ID/Reg Number"
                   class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
                   onKeyUp={(event) => {
                     setSearchUser(event.target.value);
@@ -104,71 +109,68 @@ let AddPurchasePage = () => {
                 <table class="table-auto w-full">
                   <thead class="border-b border-gray-200 dark:border-gray-800">
                     <tr>
-                      <th class="p-3 text-left">Full Name</th>
+                      <th class="p-3 text-left">Full Name {searchUser()}</th>
                       <th class="p-3 text-left">Email</th>
                     </tr>
                   </thead>
                   <tbody class="relative w-full h-full overflow-y-scroll">
-                    {connections.map((connection) =>
-                      connection.initiator.userIdNumber ===
-                      userState.userIdNumber
-                        ? connection.initiator.userIdNumber.includes(
-                            searchUser()
-                          )
-                        : connection.connection.userIdNumber.includes(
-                            searchUser()
-                          ) && (
-                            <tr
-                              class={`border-b w-full border-gray-200 dark:border-gray-800 ${
-                                purchaseDetails.seller &&
-                                purchaseDetails.seller.id === connection.id &&
-                                'bg-green-300'
-                              }`}
-                            >
-                              <td class="p-4">
-                                {connection.initiator.userIdNumber ===
-                                userState.userIdNumber
-                                  ? connection.connection.userDisplayName
-                                  : connection.initiator.userDisplayName}
-                              </td>
-                              <td class="p-4">
-                                {connection.initiator.userIdNumber ===
-                                userState.userIdNumber
-                                  ? connection.connection.userEmail
-                                  : connection.initiator.userEmail}
-                              </td>
-                              <td class="p-4 w-10">
-                                <div
-                                  class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
-                                  onClick={() =>
-                                    setPurchaseDetails({
-                                      ...purchaseDetails,
-                                      seller:
-                                        connection.initiator.userIdNumber ===
-                                        userState.userIdNumber
-                                          ? connection.connection
-                                          : connection.initiator,
-                                    })
-                                  }
+                    {connections.map(
+                      (connection) =>
+                        (connection.initiator.id === userState.id
+                          ? connection.connection.userIdNumber.startsWith(
+                              searchUser()
+                            )
+                          : connection.initiator.userIdNumber.startsWith(
+                              searchUser()
+                            )) && (
+                          <tr
+                            class={`border-b w-full border-gray-200 dark:border-gray-800 ${
+                              purchaseDetails.seller &&
+                              purchaseDetails.seller.id === connection.id &&
+                              'bg-green-300'
+                            }`}
+                          >
+                            <td class="p-4">
+                              {connection.initiator.id === userState.id
+                                ? connection.connection.userDisplayName
+                                : connection.initiator.userDisplayName}
+                            </td>
+                            <td class="p-4">
+                              {connection.initiator.id === userState.id
+                                ? connection.connection.userEmail
+                                : connection.initiator.userEmail}
+                            </td>
+                            <td class="p-4 w-10">
+                              <div
+                                class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
+                                onClick={() =>
+                                  setPurchaseDetails({
+                                    ...purchaseDetails,
+                                    seller:
+                                      connection.initiator.id === userState.id
+                                        ? connection.connection
+                                        : connection.initiator,
+                                  })
+                                }
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  class="h-4 w-4"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
                                 >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M5 13l4 4L19 7"
-                                    />
-                                  </svg>
-                                </div>
-                              </td>
-                            </tr>
-                          )
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              </div>
+                            </td>
+                          </tr>
+                        )
                     )}
                   </tbody>
                 </table>
@@ -232,7 +234,7 @@ let AddPurchasePage = () => {
           </div>
         </div>
 
-        <div class="flex flex-col w-full h-full space-y-2">
+        <div class="flex flex-col w-full h-full">
           <div
             class={`flex flex-col w-full ${
               !purchaseDetails.seller || !purchaseDetails.material
