@@ -55,6 +55,9 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
           }
         )
         .then((response) => {
+          if (response.data.error !== undefined)
+            return setMessage({ type: 'error', value: response.data.message });
+
           updateUser({
             ...response.data.data,
             userAuthenticationToken: undefined,
@@ -63,9 +66,6 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
           updateAuthenticationGuard({
             authenticationToken: response.data.data.userAuthenticationToken,
           });
-        })
-        .catch(() => {
-          setMessage({ type: 'error', value: 'Authentication error.' });
         });
   };
 
@@ -103,7 +103,7 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
         )}
 
         <div class="flex flex-col space-y-3">
-        <input
+          <input
             type="text"
             placeholder="Your username"
             class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"

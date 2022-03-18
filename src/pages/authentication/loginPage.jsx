@@ -30,6 +30,9 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
         }
       )
       .then((response) => {
+        if (response.data.error !== undefined)
+          return setMessage({ type: 'error', value: response.data.message });
+
         updateUser({
           ...response.data.data,
           userAuthenticationToken: undefined,
@@ -37,9 +40,6 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
         updateAuthenticationGuard({
           authenticationToken: response.data.data.userAuthenticationToken,
         });
-      })
-      .catch(() => {
-        setMessage({ type: 'error', value: 'Authentication error.' });
       });
   };
 
@@ -55,7 +55,9 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
             class={`${message.type === 'error' && 'text-red-500'} ${
               message.type === 'success' && 'text-emeral-800'
             }`}
-          >{message.value}</div>
+          >
+            {message.value}
+          </div>
         )}
 
         <div class="flex flex-col space-y-3">
