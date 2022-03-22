@@ -15,7 +15,7 @@ let RootPage = () => {
 
   return (
     <div class="flex w-full h-full text-gray-900 dark:text-white flex-none">
-      <div class="hidden md:block bg-green-300 flex-none">
+      <div class="hidden md:block flex-none">
         <Sidebar
           sidebarActive={true}
           setSidebarActive={(value) => setSidebarActive(value)}
@@ -270,11 +270,11 @@ let RootPage = () => {
             />
           </Sidebar>
 
-          <div class="w-1/6 h-full bg-gray-900 opacity-70">{''}</div>
+          <div class="w-1/6 h-full bg-gray-900 opacity-70 z-50">{''}</div>
         </div>
       )}
 
-      <div class="flex flex-col w-full h-full bg-gray-200 dark:bg-gray-800 px-2 pt-2  overflow-hidden">
+      <div class="flex flex-col w-full h-full bg-gray-200 dark:bg-gray-800 px-2 pt-2  overflow-hidden z-0">
         <div class="flex justify-between items-center md:justify-end mb-5">
           <div class="md:hidden" onClick={() => setSidebarActive(true)}>
             <div class="cursor-pointer">

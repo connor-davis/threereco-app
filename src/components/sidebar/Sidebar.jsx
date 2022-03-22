@@ -15,7 +15,7 @@ let Sidebar = ({
 
   return (
     <div
-      class={`flex flex-col space-y-3 h-full ${
+      class={`flex flex-col space-y-3 h-full z-50 ${
         active() ? 'w-5/6 md:w-64' : 'w-16 items-center'
       } transition-width duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow p-2`}
     >
