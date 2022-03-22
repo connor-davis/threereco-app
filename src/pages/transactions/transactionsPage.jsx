@@ -93,14 +93,15 @@ let TransactionsPage = () => {
     <div class="flex flex-col space-y-5 w-full h-full p-5 rounded-t shadow bg-white dark:bg-gray-900">
       <div class="flex justify-between items-center">
         <div class="text-lg">Transactions</div>
-        <div class="flex space-x-5">
-          <div
-            class="text-lg cursor-pointer"
+        <div class="flex space-x-2">
+          <button
+            title="Buy"
+            class="flex space-x-2 items-center text-xs cursor-pointer p-2 rounded-md bg-gray-200"
             onClick={() => navigate('/transactions/purchase')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
+              class="h-4 w-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -112,14 +113,17 @@ let TransactionsPage = () => {
                 d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
               />
             </svg>
-          </div>
-          <div
-            class="text-lg cursor-pointer"
+
+            <div class="hidden md:block">Buy</div>
+          </button>
+          <button
+            title="Sell"
+            class="flex space-x-2 items-center text-xs cursor-pointer p-2 rounded-md bg-gray-200"
             onClick={() => navigate('/transactions/sell')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
+              class="h-4 w-46"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -131,14 +135,17 @@ let TransactionsPage = () => {
                 d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
               />
             </svg>
-          </div>
-          <div
-            class="text-lg cursor-pointer"
+
+            <div class="hidden md:block">Sell</div>
+          </button>
+          <button
+            title="Export"
+            class="flex space-x-2 items-center text-xs cursor-pointer p-2 rounded-md bg-gray-200"
             onClick={() => exportTransactions()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
+              class="h-4 w-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -150,7 +157,9 @@ let TransactionsPage = () => {
                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-          </div>
+
+            <div class="hidden md:block">Export</div>
+          </button>
         </div>
       </div>
 
