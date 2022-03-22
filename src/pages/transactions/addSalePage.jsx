@@ -122,8 +122,12 @@ let AddSalePage = () => {
                           <tr
                             class={`border-b w-full border-gray-200 dark:border-gray-800 ${
                               saleDetails.purchaser &&
-                              saleDetails.purchaser.id === connection.id &&
-                              'bg-green-300'
+                              (saleDetails.purchaser.id ===
+                                connection.initiator.id ||
+                                saleDetails.purchaser.id ===
+                                  connection.connection.id)
+                                ? 'bg-gray-100'
+                                : ''
                             }`}
                           >
                             <td class="p-4">
@@ -192,7 +196,7 @@ let AddSalePage = () => {
                         class={`border-b w-full border-gray-200 dark:border-gray-800 ${
                           saleDetails.material &&
                           saleDetails.material.id === material.id &&
-                          'bg-green-300'
+                          'bg-gray-100'
                         }`}
                       >
                         <td class="p-4">{material.materialName}</td>
@@ -256,9 +260,16 @@ let AddSalePage = () => {
                         <td class="p-4">{saleDetails.purchaser.userEmail}</td>
                         <td class="p-4 w-10">
                           <div
-                            class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
+                            class={`px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer ${
+                              !saleDetails.purchaser ||
+                              !saleDetails.material
+                                ? 'cursor-not-allowed'
+                                : ''
+                            }`}
                             onClick={() =>
-                              setSaleDetails('purchaser', undefined)
+                              !saleDetails.purchaser || !saleDetails.material
+                                ? {}
+                                : setSaleDetails('purchaser', undefined)
                             }
                           >
                             <svg
@@ -302,9 +313,16 @@ let AddSalePage = () => {
                         </td>
                         <td class="p-4 w-10">
                           <div
-                            class="px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer"
+                            class={`px-4 py-1 text-sm text-white bg-blue-500 rounded cursor-pointer ${
+                              !saleDetails.purchaser ||
+                              !saleDetails.material
+                                ? 'cursor-not-allowed'
+                                : ''
+                            }`}
                             onClick={() =>
-                              setSaleDetails('material', undefined)
+                              !saleDetails.purchaser || !saleDetails.material
+                                ? {}
+                                : setSaleDetails('material', undefined)
                             }
                           >
                             <svg
