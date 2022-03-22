@@ -14,6 +14,7 @@ let DashboardPage = () => {
   let [transactions, setTransactions] = createStore([], {
     name: 'transactions',
   });
+  let [materials, setMaterials] = createStore([], { name: 'materials' });
 
   let captureImageOfCanvas = (id, fileName) => {
     var canvasElement = document.getElementById(id);
@@ -69,6 +70,24 @@ let DashboardPage = () => {
             setConnections(response.data.data);
           }
         });
+
+      axios
+        .get('https://api.3reco.co.za/api/materials/get', {
+          headers: {
+            authorization: 'Bearer ' + authState.authenticationToken,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            setMaterials(
+              response.data.data.map((m) => {
+                return { ...m, stock: 0 };
+              })
+            );
+
+            return initMaterialsChart();
+          }
+        });
     }, 300);
   });
 
@@ -102,6 +121,86 @@ let DashboardPage = () => {
 
       return canProceed;
     }).length;
+  };
+
+  let processStocks = () => {
+    transactions.map((transaction) => {
+      let isUser = transaction.user === userState.id;
+      let transactionType = transaction.type;
+      let transactionWeight = transaction.weight;
+      let transactionMaterial = transaction.material;
+
+      setMaterials(
+        materials.map((material) => {
+          if (material.id === transactionMaterial.id) {
+            return {
+              ...material,
+              stock: isUser
+                ? transactionType === 'purchase'
+                  ? material.stock + transactionWeight
+                  : material.stock - transactionWeight
+                : transactionType === 'sale'
+                ? material.stock - transactionWeight
+                : material.stock + transactionWeight,
+            };
+          } else return material;
+        })
+      );
+    });
+  };
+
+  let initMaterialsChart = () => {
+    let materialNames = materials.map((material) => material.materialName);
+
+    processStocks();
+
+    let materialStocks = materials.map((material) => material.stock);
+
+    const ctx = document.getElementById('materials').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: materialNames,
+        datasets: [
+          {
+            label: 'Stock (kg)',
+            type: 'bar',
+            data: materialStocks,
+            backgroundColor: 'rgba(6,95,70,0.5)',
+            borderColor: 'rgba(6,95,70,1)',
+            fill: false,
+            order: 2,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          position: 'top',
+          text: 'Bar Graph',
+          fontSize: 18,
+          fontColor: '#111',
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            fontColor: '#333',
+            fontSize: 16,
+          },
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                min: 0,
+              },
+            },
+          ],
+        },
+      },
+    });
   };
 
   let initTransactionsChart = () => {
@@ -198,8 +297,12 @@ let DashboardPage = () => {
         <div class="text-lg">Dashboard</div>
       </div>
 
-      <div class="flex flex-col space-y-5 w-full h-full">
-        <div class="flex w-full items-center space-x-2 md:space-x-5">
+      <div class="flex flex-col space-y-5 w-full h-full overflow-y-auto">
+        <div class="flex flex-col lg:flex-row w-full items-center space-y-2 lg:space-y-0 lg:space-x-2">
+          <div class="flex flex-col w-full h-auto p-10 justify-center items-center bg-gray-200 dark:bg-gray-800 rounded select-none">
+            <div class="text-lg font-bold">Materials</div>
+            <div>{materials.length}</div>
+          </div>
           <div class="flex flex-col w-full h-auto p-10 justify-center items-center bg-gray-200 dark:bg-gray-800 rounded select-none">
             <div class="text-lg font-bold">Connections</div>
             <div>{connections.length}</div>
@@ -210,7 +313,7 @@ let DashboardPage = () => {
           </div>
         </div>
 
-        <div class="flex flex-col w-full h-full pb-10 overflow-y-auto">
+        <div class="flex flex-col w-full h-full pb-10">
           <div
             class="flex flex-col justify-center items-center self-end cursor-pointer"
             onClick={() =>
@@ -239,6 +342,37 @@ let DashboardPage = () => {
             </svg>
           </div>
           <canvas id="transactions" class="max-h-96"></canvas>
+        </div>
+
+        <div class="flex flex-col w-full h-full pb-10">
+          <div
+            class="flex flex-col justify-center items-center self-end cursor-pointer"
+            onClick={() =>
+              captureImageOfCanvas('materials', 'Materials Statistics')
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <canvas id="materials" class="max-h-96"></canvas>
         </div>
       </div>
     </div>
