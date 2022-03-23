@@ -51,7 +51,7 @@ let AddConnectionPage = () => {
   };
 
   return (
-    <div class="flex flex-col space-y-5 w-full h-full p-2 rounded-t shadow bg-white dark:bg-gray-900">
+    <div class="flex flex-col space-y-5 w-full h-full p-5 rounded-t shadow bg-white dark:bg-gray-900">
       <div class="flex justify-between items-center">
         <div class="text-lg">Add Connection</div>
       </div>
@@ -86,7 +86,7 @@ let AddConnectionPage = () => {
                       user.userIdNumber.startsWith(searchTerm()) && (
                         <tr
                           class={`border-b w-full border-gray-200 dark:border-gray-800 ${
-                            selectedUser() === user.id && 'bg-green-300'
+                            selectedUser() === user.id && 'bg-gray-100'
                           }`}
                         >
                           <td class="p-4">{user.userDisplayName}</td>
