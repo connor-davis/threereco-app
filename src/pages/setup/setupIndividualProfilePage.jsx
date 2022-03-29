@@ -68,7 +68,8 @@ let SetupIndividualProfilePage = () => {
       {stage() === 1 && (
         <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
           <div class="animate-fade-in text-center">
-            Remember, you are allowed to leave things out, this is your profile.
+            Remember, keep things professional and fill in all your details we
+            ask for. Your data is safe with us.
           </div>
         </div>
       )}
@@ -232,7 +233,33 @@ let SetupIndividualProfilePage = () => {
               </div>
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
+                disabled={
+                  !details.userDisplayName ||
+                  !details.userDescription ||
+                  !details.userGender ||
+                  !details.userEthnicity ||
+                  !details.userAge
+                }
+                title={
+                  !details.userDisplayName ||
+                  !details.userDescription ||
+                  !details.userGender ||
+                  !details.userEthnicity ||
+                  !details.userAge
+                    ? 'Enter all fields.'
+                    : 'Next'
+                }
                 onClick={() => {
+                  if (
+                    !details.userDisplayName ||
+                    !details.userDescription ||
+                    !details.userGender ||
+                    !details.userEthnicity ||
+                    !details.userAge
+                  ) {
+                    return;
+                  }
+
                   setStage(stage() + 1);
 
                   setTimeout(() => {
@@ -266,6 +293,7 @@ let SetupIndividualProfilePage = () => {
             <div class="flex space-x-2">
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
+                title="Back"
                 onClick={() => setStage(stage() - 2)}
               >
                 <svg
@@ -320,7 +348,13 @@ let SetupIndividualProfilePage = () => {
               </div>
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
+                disabled={!details.userPhoneNumber}
+                title={!details.userPhoneNumber ? 'Enter all fields.' : 'Next'}
                 onClick={() => {
+                  if (!details.userPhoneNumber) {
+                    return;
+                  }
+
                   setStage(stage() + 1);
 
                   setTimeout(() => {
@@ -354,6 +388,7 @@ let SetupIndividualProfilePage = () => {
             <div class="flex space-x-2">
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
+                title="Back"
                 onClick={() => setStage(stage() - 2)}
               >
                 <svg
@@ -493,7 +528,39 @@ let SetupIndividualProfilePage = () => {
               </div>
               <button
                 class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
+                disabled={
+                  !details.userStreetAddress ||
+                  !details.userSuburb ||
+                  !details.userWard ||
+                  !details.userCity ||
+                  !details.userAreaCode ||
+                  !details.userProvince ||
+                  !details.userCountry
+                }
+                title={
+                  !details.userStreetAddress ||
+                  !details.userSuburb ||
+                  !details.userWard ||
+                  !details.userCity ||
+                  !details.userAreaCode ||
+                  !details.userProvince ||
+                  !details.userCountry
+                    ? 'Enter all fields.'
+                    : 'Next'
+                }
                 onClick={() => {
+                  if (
+                    !details.userStreetAddress ||
+                    !details.userSuburb ||
+                    !details.userWard ||
+                    !details.userCity ||
+                    !details.userAreaCode ||
+                    !details.userProvince ||
+                    !details.userCountry
+                  ) {
+                    return;
+                  }
+
                   completeProfile();
                 }}
               >
@@ -503,12 +570,12 @@ let SetupIndividualProfilePage = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  stroke-width="2"
                 >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
+                    d="M5 13l4 4L19 7"
                   />
                 </svg>
               </button>
